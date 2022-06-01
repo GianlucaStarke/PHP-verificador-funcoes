@@ -3,35 +3,24 @@
 <script>
 const root = document.querySelector('#root');
 
-const inputFuncao = () => {
-    const input = criarElemento('input');
+const inputFuncao = () => criarElemento('input', {
+    name: 'funcao',
+    type: 'text'
+});
 
-    input.name = 'funcao';
-    input.type = 'text';
-
-    return input;
-}
-
-const botaoFuncao = () => {
-    const button = criarElemento('button');
-
-    button.type = 'submit';
-    button.innerText = 'Executar';
-
-    return button;
-}
+const botaoFuncao = () => criarElemento('button', {
+    type: 'submit',
+    innerText: 'Executar'
+});
 
 const funcaoExecutada = (result) => {
     document.querySelector('#funcao-executada')
         && document.querySelector('#funcao-executada').remove();
     
-    const div = criarElemento('div');
-
-    div.id = 'funcao-executada';
-    
-    if(result){
-        div.innerText = 'Função executada: '+ result;
-    }
+    const div = criarElemento('div', {
+        id:'funcao-executada',
+        innerText: result ? 'Função executada: '+ result : ''
+    });
 
     return div;
 }
@@ -78,11 +67,17 @@ const formFuncao = () => {
 }
 
 root.append(
-    formFuncao(),
-    funcaoExecutada()
+    formFuncao()
 );
 
-function criarElemento(tag){
-    return document.createElement(tag);
+function criarElemento(tag, {id = '', type = '', innerText = '', name = ''} = {}){
+    const element = document.createElement(tag);
+
+    element.id = id;
+    element.type = type;
+    element.innerText = innerText;
+    element.name = name;
+
+    return element;
 }
 </script>
