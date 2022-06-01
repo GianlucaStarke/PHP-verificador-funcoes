@@ -70,13 +70,11 @@ root.append(
     funcaoExecutada()
 );
 
-function criarElemento(tag, {id = '', type = '', innerText = '', name = ''} = {}){
+function criarElemento(tag, attr = {}){
     const element = document.createElement(tag);
 
-    element.id = id;
-    element.type = type;
-    element.innerText = innerText;
-    element.name = name;
+    Object.entries(attr).map(([attr, value]) => element.setAttribute(attr, value));
+    element.innerText = attr.innerText ? attr.innerText : '';
 
     return element;
 }
