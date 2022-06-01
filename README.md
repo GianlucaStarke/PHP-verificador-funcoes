@@ -6,4 +6,4 @@ Modifique como quiser os arquivos.
 # PHP-function-check
 Receive a function name by input. If function exists, execute it.
 
-Modify the files as your wish.
+Modify the files as you wish.
