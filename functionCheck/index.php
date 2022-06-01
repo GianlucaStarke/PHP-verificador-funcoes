@@ -21,6 +21,21 @@ const botaoFuncao = () => {
     return button;
 }
 
+const funcaoExecutada = (result) => {
+    document.querySelector('#funcao-executada')
+        && document.querySelector('#funcao-executada').remove();
+    
+    const div = criarElemento('div');
+
+    div.id = 'funcao-executada';
+    
+    if(result){
+        div.innerText = 'Função executada: '+ result;
+    }
+
+    return div;
+}
+
 const formFuncao = () => {
     const form = criarElemento('form');
 
@@ -29,6 +44,8 @@ const formFuncao = () => {
             const event = e || window.event;
 
             event.preventDefault();
+
+            funcaoExecutada();
 
             const res = await fetch('funcoes.php?funcao='+ this.funcao.value);
 
@@ -42,7 +59,9 @@ const formFuncao = () => {
                 throw new Error(json.error);
             }
 
-            console.log(json.result);
+            root.append(
+                funcaoExecutada(json.result)
+            );
         }
         catch(rej){
             alert(rej);
@@ -59,7 +78,8 @@ const formFuncao = () => {
 }
 
 root.append(
-    formFuncao()
+    formFuncao(),
+    funcaoExecutada()
 );
 
 function criarElemento(tag){
