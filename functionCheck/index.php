@@ -14,15 +14,16 @@ const botaoFuncao = () => criarElemento('button', {
 });
 
 const funcaoExecutada = (result) => {
-    document.querySelector('#funcao-executada')
-        && document.querySelector('#funcao-executada').remove();
+    const elemento = document.querySelector('#funcao-executada');
     
-    const div = criarElemento('div', {
-        id:'funcao-executada',
-        innerText: result ? 'Função executada: '+ result : ''
-    });
-
-    return div;
+    if(elemento){
+        elemento.innerText = result ? 'Função executada: '+ result : '';
+    }
+    else{
+        return criarElemento('div', {
+            id:'funcao-executada'
+        });
+    }
 }
 
 const formFuncao = () => {
@@ -48,9 +49,7 @@ const formFuncao = () => {
                 throw new Error(json.error);
             }
 
-            root.append(
-                funcaoExecutada(json.result)
-            );
+            funcaoExecutada(json.result);
         }
         catch(rej){
             alert(rej);
@@ -67,7 +66,8 @@ const formFuncao = () => {
 }
 
 root.append(
-    formFuncao()
+    formFuncao(),
+    funcaoExecutada()
 );
 
 function criarElemento(tag, {id = '', type = '', innerText = '', name = ''} = {}){
