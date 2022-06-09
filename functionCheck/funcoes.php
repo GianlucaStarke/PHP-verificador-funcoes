@@ -3,12 +3,12 @@
 try{
     str_replace('-', '_', $_GET['funcao'])();
 }
-catch(Error $e){
+catch(Exception $e){
     echo json_encode([
         'error' => $e->getMessage()
     ]);
 }
-catch(Exception $e){
+catch(Error $e){
     echo json_encode([
         'error' => $e->getMessage()
     ]);

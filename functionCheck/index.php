@@ -3,33 +3,35 @@
 <script>
 const root = document.querySelector('#root');
 
-const inputFuncao = () => criarElemento('input', {
+const inputFuncao = () => createHTMLElement('input', {
     name: 'funcao',
     type: 'text'
 });
 
-const botaoFuncao = () => criarElemento('button', {
+const botaoFuncao = () => createHTMLElement('button', {
     type: 'submit',
     innerText: 'Executar'
 });
 
-const funcaoExecutada = (result) => {
+const funcaoExecutada = result => {
     const elemento = document.querySelector('#funcao-executada');
     
     if(elemento){
         elemento.innerText = result ? 'Função executada: '+ result : '';
     }
     else{
-        return criarElemento('div', {
+        return createHTMLElement('div', {
             id:'funcao-executada'
         });
     }
 }
 
-const formFuncao = () => {
-    const form = criarElemento('form');
-
-    form.addEventListener('submit', async function(e){
+const formFuncao = () => createHTMLElement('form', {
+    appendChildren: [
+        inputFuncao(),
+        botaoFuncao()
+    ],
+    onsubmit: async function(e){
         try{
             const event = e || window.event;
 
@@ -55,26 +57,28 @@ const formFuncao = () => {
             alert(rej);
             console.error(rej);
         }
-    });
-
-    form.append(
-        inputFuncao(),
-        botaoFuncao()
-    );
-
-    return form
-}
+    }
+});
 
 root.append(
     formFuncao(),
     funcaoExecutada()
 );
 
-function criarElemento(tag, props = {}){
+function createHTMLElement(tag, props = {}){
     const element = document.createElement(tag);
 
     Object.entries(props).map(([prop, value]) => element[prop] = value);
 
-    return element;
+	Array.isArray(props.classes)
+	&& props.classes.map(classe => element.classList.add(classe));
+
+	Array.isArray(props.appendChildren)
+	&& props.appendChildren.map(child => element.append(child));
+
+	Array.isArray(props.prependChildren)
+	&& props.prependChildren.map(child => element.prepend(child));
+
+	return element;
 }
 </script>
