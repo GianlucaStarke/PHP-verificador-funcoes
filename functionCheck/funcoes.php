@@ -1,9 +1,14 @@
 <?php
 
+$acao = str_replace('-', '_', $_GET['funcao']);
+$acoes = [
+    'teste',
+    'teste_replace'
+];
+
 try{
-    echo json_encode(
-        str_replace('-', '_', $_GET['funcao'])()
-    );
+    if(!in_array($acao, $acoes)) throw new Exception('Ação inválida.');
+    echo json_encode($acao($conexao));
 }
 catch(Exception $e){
     echo json_encode([
