@@ -1,9 +1,9 @@
 <?php
 
 try{
-    $res = str_replace('-', '_', $_GET['funcao'])();
-    
-    echo json_encode($res);
+    echo json_encode(
+        str_replace('-', '_', $_GET['funcao'])();
+    );
 }
 catch(Exception $e){
     echo json_encode([
