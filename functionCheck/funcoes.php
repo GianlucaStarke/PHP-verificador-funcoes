@@ -2,7 +2,7 @@
 
 try{
     echo json_encode(
-        str_replace('-', '_', $_GET['funcao'])();
+        str_replace('-', '_', $_GET['funcao'])()
     );
 }
 catch(Exception $e){
