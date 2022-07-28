@@ -1,7 +1,9 @@
 <?php
 
 try{
-    str_replace('-', '_', $_GET['funcao'])();
+    $res = str_replace('-', '_', $_GET['funcao'])();
+    
+    echo json_encode($res);
 }
 catch(Exception $e){
     echo json_encode([
@@ -18,15 +20,15 @@ finally{
 }
 
 function teste(){
-    echo json_encode([
+    return [
         'result' => 'teste'
-    ]);
+    ];
 }
 
 function teste_replace(){
-    echo json_encode([
+    return [
         'result' => 'teste_replace'
-    ]);
+    ];
 }
 
 ?>
